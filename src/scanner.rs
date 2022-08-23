@@ -9,7 +9,7 @@ pub struct Scanner {
     pin: InputPin,
 }
 
-pub struct Pulse {
+struct Pulse {
     value: Level,
     length: u128,
 }
