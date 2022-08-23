@@ -24,7 +24,7 @@ impl Scanner {
         self.pin_number
     }
 
-    pub fn scan_blocking(&mut self) -> Result<u64> {
+    pub fn scan_blocking(&self) -> Result<u64> {
         let mut command: Vec<Pulse> = Vec::with_capacity(80);
         let mut count1 = 0u32;
         let mut previous = Level::Low;
