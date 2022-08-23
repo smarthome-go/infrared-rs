@@ -1,6 +1,6 @@
 [package]
 name = "infrared-rs"
-version = "0.1.0"
+version = "0.2.0"
 description = "Rust crate used for receiving signals from infrared remote controls (Ported from Go)"
 license = "GPL-2.0-only"
 edition = "2021"
