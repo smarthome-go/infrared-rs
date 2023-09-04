@@ -1,6 +1,6 @@
 [package]
 name = "infrared-rs"
-version = "0.2.0"
+version = "0.3.0"
 description = "Rust crate used for receiving signals from infrared remote controls (Ported from Go)"
 license = "GPL-2.0-only"
 edition = "2021"
@@ -10,5 +10,5 @@ repository = "https://github.com/smarthome-go/infrared-rs"
 
 [dependencies]
 gpio-cdev = "0.5.1"
-rppal = "0.13.1"
+rppal = "0.14.1"
 spin_sleep = "1.1.1"
