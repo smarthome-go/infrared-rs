@@ -9,4 +9,6 @@ repository = "https://github.com/smarthome-go/infrared-rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+gpio-cdev = "0.5.1"
 rppal = "0.13.1"
+spin_sleep = "1.1.1"

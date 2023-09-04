@@ -1,12 +1,11 @@
-use std::{thread, time::Duration};
+use std::time::Duration;
 
-use rppal::gpio::{InputPin, Level};
+use rppal::gpio::Level;
 
-use crate::errors::Result;
+use crate::{errors::Result, hardware::HardwareInput};
 
 pub struct Scanner {
-    pin_number: u8,
-    pin: InputPin,
+    input: HardwareInput,
 }
 
 struct Pulse {
@@ -15,29 +14,24 @@ struct Pulse {
 }
 
 impl Scanner {
-    pub fn try_new(pin_number: u8) -> Result<Self> {
-        let pin = rppal::gpio::Gpio::new()?.get(pin_number)?.into_input();
-        Ok(Self { pin_number, pin })
-    }
-
-    pub fn pin(&self) -> u8 {
-        self.pin_number
+    pub fn new(input: HardwareInput) -> Self {
+        Self { input }
     }
 
     pub fn scan_blocking(&self) -> Result<u64> {
         let mut command: Vec<Pulse> = Vec::with_capacity(80);
         let mut count1 = 0u32;
         let mut previous = Level::Low;
-        let mut value = self.pin.read();
+        let mut value = self.input.read_value()?;
 
-        while self.pin.read() == Level::High {
-            thread::sleep(Duration::from_micros(100));
+        while self.input.read_value()? == Level::High {
+            spin_sleep::sleep(Duration::from_micros(100))
         }
 
         let mut start_time = std::time::Instant::now();
 
         loop {
-            thread::sleep(Duration::from_nanos(50));
+            spin_sleep::sleep(Duration::from_nanos(50));
 
             if value != previous {
                 let pulse_length = start_time.elapsed();
@@ -54,7 +48,7 @@ impl Scanner {
             }
 
             previous = value;
-            value = self.pin.read();
+            value = self.input.read_value()?;
 
             if count1 > 10000 {
                 break;
