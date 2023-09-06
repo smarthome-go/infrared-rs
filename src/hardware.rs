@@ -10,7 +10,7 @@ pub enum HardwareInput {
 
 impl HardwareInput {
     pub fn new_cdev(pin_number: u32, device_path: String) -> Result<Self> {
-        let mut chip = Chip::new(device_path).unwrap();
+        let mut chip = Chip::new(device_path)?;
         let handle = chip.get_line(pin_number)?.request(
             LineRequestFlags::INPUT,
             0,
